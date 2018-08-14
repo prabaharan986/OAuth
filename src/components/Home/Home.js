@@ -5,6 +5,9 @@ class Home extends Component {
   login() {
     this.props.auth.login();
   }
+  logout() {
+    this.props.auth.logout();
+  }
   render() {
     const { isAuthenticated } = this.props.auth;
     return (
@@ -13,6 +16,11 @@ class Home extends Component {
           isAuthenticated() && (
             <h4>
               You are logged in!
+              <button
+                onClick={() => this.logout()}
+              >
+                Log Out
+              </button>
             </h4>
           )
         }
