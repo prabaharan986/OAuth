@@ -14,8 +14,11 @@ const auth = new Auth();
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
     auth.handleAuthentication();
+  } else {
+    auth.renewToken();
   }
 };
+
 
 const Routes = () => (
   <Router history={history}>
@@ -32,7 +35,15 @@ const Routes = () => (
             }
           }
         />
-        <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+        <Route
+          path="/home"
+          render={
+            (props) => {
+              auth.requireAuth();
+              return <Home auth={auth} {...props} />;
+            }
+          }
+        />
       </Switch>
       <Footer />
     </React.Fragment>
